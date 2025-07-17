@@ -23,7 +23,16 @@ jobs:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
-          echo "Login starting"
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-          echo "Login Finished"
+          
+    - name: Build image 
+      run: docker build --tag graphql-test .
+
+    - name: rename image
+      run: docker tag graphql-test dilkercp/docker-graph:0.0.2
+      
+    - name: push image to docker-hub
+      run: docker push dilkercp/docker-graph:0.0.2
+      
+          
           
